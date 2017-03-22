@@ -1,0 +1,12 @@
+{
+  "name": "vue-products",
+  "description": "Products application built with Vue.js",
+  "version": "1.0.0",
+  "homepage": "",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "bootstrap-sass": "3.3.7"
+  },
+  "devDependencies": {}
+}
