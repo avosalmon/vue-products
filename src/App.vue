@@ -1,6 +1,11 @@
 <template>
-  <div id="app">
-    <router-view></router-view>
+  <div>
+    <header>
+      <router-link to="/"><img src="./assets/img/logo.png" height="50"></router-link>
+    </header>
+    <div id="app">
+      <router-view></router-view>
+    </div>
   </div>
 </template>
 
@@ -14,4 +19,8 @@ export default {
 @import "./assets/sass/variables";
 @import "./assets/sass/mixins";
 @import "./assets/sass/common";
+
+header {
+  padding: 0 15%;
+}
 </style>
