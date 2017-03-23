@@ -112,64 +112,35 @@
 </template>
 
 <script>
+import router from '../router'
+import products from '../requestors/products-requestor'
+
 export default {
   name: 'product-edit',
 
   data () {
     return {
-      product: product
+      product: {}
     }
   },
 
+  mounted () {
+    this.getProduct()
+  },
+
   methods: {
+    getProduct () {
+      products.find(this.$route.params.id).then(response => {
+        this.product = response.data.data.product
+      })
+    },
+
     updateProduct () {
-      console.log('update product')
+      products.update(this.$route.params.id, this.product).then(response => {
+        router.push('/list')
+      })
     }
   }
-}
-
-let product = {
-  colorme_id: 200000218,
-  combination_id: 0,
-  cost: 960,
-  cost_with_tax: 1037,
-  created_at: '2017-01-24 10:47:12',
-  deleted_at: null,
-  discount_price: null,
-  discount_price_with_tax: 0,
-  discount_price_with_tax_formatted: '0円',
-  display_state: 'published',
-  facebook_title: '',
-  id: 8988,
-  image_uri: '/kurashicom-images/colorme/PA01034/348/product/86995529.jpg',
-  jan_code: '',
-  last_sold_at: null,
-  markup: 0,
-  max_purchase_count: 0,
-  members_price: 1200,
-  members_price_with_tax: 1296,
-  model_number: '901-70901024-X',
-  nerest_delivery_date: null,
-  preview_token: 'tMaPvci1MYFJVxR4S6BQUwV6HYLc1tL94bTINeal4BaTwAJmDpGhRE8uiHRT',
-  price: 1200,
-  price_with_tax: 1296,
-  price_with_tax_formatted: '1,296円',
-  product_content: '<div></div>',
-  product_name: 'フランボワーズとバナナのチョコレートジャム（待ち）',
-  public_stock: 0,
-  public_stock_updated_at: null,
-  publish_at: null,
-  real_stock: 0,
-  real_stock_updated_at: null,
-  search_engine_description: '',
-  search_engine_title: '',
-  state: 'active',
-  tag: 'new',
-  tag_display_until: '2017-02-13 23:55:00',
-  unit: '個',
-  unpublish_at: null,
-  updated_at: '2017-02-07 09:40:02',
-  wrappable: 1
 }
 
 </script>
