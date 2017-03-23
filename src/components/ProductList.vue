@@ -16,7 +16,7 @@
       <tbody>
         <tr v-for="product in products">
           <!-- <td><button class="btn btn-sm btn-default checkbox-btn" ng-class="{ active: vm.isSelected(product.id) }" ng-click="vm.isSelected(product.id) ? vm.deselect(product.id) : vm.select(product.id)"><i class="glyphicon glyphicon-ok icon"></i></button></td> -->
-          <td><img class="image" v-bind:src="imageUrl(product.image_uri)" /></td>
+          <td><img class="image" :src="imageUrl(product.image_uri)" /></td>
           <td><router-link :to="'/edit/' + product.id">{{ product.product_name }}</router-link></td>
           <td nowrap="nowrap">{{ product.model_number }}</td>
           <td class="center">{{ displayState(product.display_state) }}</td>
@@ -44,21 +44,28 @@
 </template>
 
 <script>
+import products from '../requestors/products-requestor'
+
 export default {
   name: 'product-list',
 
   data () {
     return {
-      products: products
+      products: []
     }
+  },
+
+  mounted () {
+    this.getProducts()
   },
 
   methods: {
     imageUrl (uri) {
       return 'https://s3-ap-northeast-1.amazonaws.com' + uri
     },
+
     displayState (state) {
-      var label = ''
+      let label = ''
       switch (state) {
         case 'unpublished':
           label = '非公開'
@@ -68,39 +75,15 @@ export default {
           break
       }
       return label
+    },
+
+    getProducts () {
+      products.all().then(response => {
+        this.products = response.data.data.products
+      })
     }
   }
 }
-
-let products = [
-  {
-    id: 1,
-    product_name: 'フランボワーズとバナナのチョコレートジャム',
-    image_uri: '/kurashicom-images/colorme/PA01034/348/product/86995529.jpg',
-    model_number: '901-70901024-X',
-    display_state: 'published',
-    public_stock: 10,
-    real_stock: 15
-  },
-  {
-    id: 2,
-    product_name: 'フランボワーズとバナナのチョコレートジャム',
-    image_uri: '/kurashicom-images/colorme/PA01034/348/product/86995529.jpg',
-    model_number: '901-70901024-X',
-    display_state: 'published',
-    public_stock: 10,
-    real_stock: 15
-  },
-  {
-    id: 3,
-    product_name: 'フランボワーズとバナナのチョコレートジャム',
-    image_uri: '/kurashicom-images/colorme/PA01034/348/product/86995529.jpg',
-    model_number: '901-70901024-X',
-    display_state: 'published',
-    public_stock: 10,
-    real_stock: 15
-  }
-]
 </script>
 
 <style lang="scss">
